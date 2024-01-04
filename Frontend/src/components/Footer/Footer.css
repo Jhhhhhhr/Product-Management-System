@@ -5,6 +5,8 @@
     height: 50px;
     width: 100%;
     background: #111827;
+    position: absolute;
+    bottom: 0;
 }
 
 .footer_icons{
