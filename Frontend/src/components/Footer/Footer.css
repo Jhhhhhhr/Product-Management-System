@@ -1,0 +1,23 @@
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    width: 100%;
+    background: #111827;
+}
+
+.footer_icons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.footer_contacts{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 5%;
+    gap: 20px;
+}
