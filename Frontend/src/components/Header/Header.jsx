@@ -1,6 +1,6 @@
 import "./Header.css";
 import { Input } from "antd";
-import { UserOutlined, ShoppingOutlined } from "@ant-design/icons";
+import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 
 const { Search } = Input;
 
@@ -20,7 +20,7 @@ export default function Header() {
       <div className="header_userInfo">
         <UserOutlined style={{color:'white'}}/>
         <p style={{color:'white'}}>Sign Out</p>
-        <ShoppingOutlined style={{color:'white'}}/>
+        <ShoppingCartOutlined style={{color:'white'}}/>
         <p style={{color:'white'}}>$0.00</p>
       </div>
     </div>

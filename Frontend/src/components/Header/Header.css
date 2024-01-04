@@ -5,6 +5,8 @@
     background: #111827;
     height: 50px;
     width: 100%;
+    position: absolute;
+    top: 0;
 }
 
 .header_title{
