@@ -3,7 +3,7 @@ import { Button, Form, Input } from 'antd';
 // import { Link } from "react-router-dom";
 import './SignInCard.css'
 
-const App = () => {
+const SignInCard = () => {
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
   };
@@ -15,7 +15,7 @@ const App = () => {
         remember: true,
       }}
       onFinish={onFinish}
-    > 
+    >
       <div className='close-outlined'><CloseOutlined /></div>
       <h2 className='Sign-in-title'>Sign in to your account</h2>
       <Form.Item
@@ -44,7 +44,6 @@ const App = () => {
           placeholder="Password"
         />
       </Form.Item>
-      
 
       <Form.Item>
         <Button type="primary" htmlType="submit" className="login-form-button">
@@ -62,4 +61,4 @@ const App = () => {
     </Form>
   );
 };
-export default App;
+export default SignInCard;

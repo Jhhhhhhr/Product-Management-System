@@ -19,7 +19,7 @@ export default function Header() {
       />
       <div className="header_userInfo">
         <UserOutlined style={{color:'white'}}/>
-        <p style={{color:'white'}}>Sign Out</p>
+        <p style={{color:'white'}}>Sign In</p>
         <ShoppingCartOutlined style={{color:'white'}}/>
         <p style={{color:'white'}}>$0.00</p>
       </div>

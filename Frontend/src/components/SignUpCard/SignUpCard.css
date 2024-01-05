@@ -1,0 +1,29 @@
+.login-form {
+    padding: 2vw;
+    height: 80%;
+    width: 40vw;
+    min-width: 350px;
+    max-width: 600px;
+    box-shadow: 0 0 1vw gray;
+    border-radius: 5px;
+  }
+  .login-form-forgot {
+    float: right;
+  }
+  .ant-col-rtl .login-form-forgot {
+    float: left;
+  }
+  .login-form-button {
+    width: 100%;
+  }
+  .Sign-in-title {
+    margin-top: 0;
+    text-align: center;
+  }
+  .close-outlined {
+    text-align: end;
+  }
+  a {
+    text-decoration: underline;
+  }
+  
