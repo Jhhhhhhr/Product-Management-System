@@ -1,0 +1,40 @@
+.form-container{
+  display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-form {
+  
+    padding: 2vw;
+    height: 30vw;
+    max-height: 350px;
+    width: 30vw;
+    min-width: 350px;
+    box-shadow: 0 0 1vw gray;
+    border-radius: 5px;
+    font-size: 1vw;
+  }
+  .login-form > * {
+    margin-bottom: 1.5vw;
+  }
+  .login-form-forgot {
+    float: right;
+  }
+  .ant-col-rtl .login-form-forgot {
+    float: left;
+  }
+  .login-form-button {
+    width: 100%;
+  }
+  .Sign-in-title {
+    margin-top: 0;
+    text-align: center;
+  }
+  .close-outlined {
+    text-align: end;
+    margin: 0;
+  }
+  a {
+    text-decoration: underline;
+  }
