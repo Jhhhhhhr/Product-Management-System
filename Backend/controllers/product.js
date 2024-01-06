@@ -1,5 +1,16 @@
 const Product = require('../models/Product');
 
+const getProductsByOwner = async (req, res) => {
+    try {
+        const id = req?.params?.id;
+        const products = await Product.find({ owner: id });
+        console.log(products);
+        res.status(200).json(products);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
 const getAllProducts = async (req, res) => {
     try {
         const products = await Product.find();
@@ -12,8 +23,8 @@ const getAllProducts = async (req, res) => {
 
 const createProduct = async (req, res) => {
     try {
-        const product = new Product(req.body);
-        console.log(`create a new product: ${product}`);
+        const product = new Product({ ...req.body, owner: req.user.id });
+        console.log(`create a new product: ${product} with owner ${req.user.username}`);
         if (!product.name) {
             return res.status(400).json({ message: 'Please provide all fields' });
         }
@@ -58,6 +69,7 @@ const deleteProduct = async (req, res) => {
 };
 
 module.exports = {
+    getProductsByOwner,
     getAllProducts,
     createProduct,
     getOneProduct,
