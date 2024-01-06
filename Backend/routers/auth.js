@@ -1,11 +1,14 @@
+const { checkEmpty, checkDuplicate } = require('../middlewares/validation');
+const { createUser } = require('../controllers/user')
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const User = require('../models/user');
+const User = require('../models/User');
 const CustomAPIError = require('../errors');
 const router = express.Router();
 
 // /auth/login
-router.post('/login', async (req, res, next) => {
+
+router.post('/signin', async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
@@ -28,10 +31,14 @@ router.post('/login', async (req, res, next) => {
     const token = await jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: '30d'
     });
-    res.json({ token });
+
+    console.log(`User:${user} login`);
+    res.json({ token, isAdmin: user.isAdmin });
   } catch (err) {
     next(err);
   }
 });
 
+// /auth/signup
+router.post('/signup', checkEmpty, checkDuplicate, createUser);
 module.exports = router;

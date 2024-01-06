@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../models/User');
 
 const getAllUsers = async (req, res) => {
   try {
@@ -22,11 +22,10 @@ const getOneUser = async (req, res) => {
 const createUser = async (req, res) => {
   try {
     const user = new User(req.body);
-    if (!user.username || !user.email || !user.password) {
-      return res.status(400).json({ message: 'Please provide all fields' });
-    }
+
     await user.save();
-    res.status(201).json(user);
+    console.log("User created!");
+    res.status(201).json({ message: "User created!" });
   } catch (err) {
     console.log(err.message);
     res.status(500).json({ message: 'Server Error' });
