@@ -9,16 +9,16 @@ const AuthForm = (props) => {
 
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
-        const {username, password} = values;
+        const { username, password } = values;
         // need more backend support here
-        if (type === "signIn" ) {
+        if (type === "signIn") {
             if (username === "qwe" && password === "123") {
                 handleLogin(username);
                 navigate("/");
             } else {
                 alert("Invalid username or password!")
             }
-        } 
+        }
 
         // need more backend support here
         if (type === "signUp") {
