@@ -32,6 +32,26 @@ const createUser = async (req, res) => {
   }
 };
 
+const changeUserPassword = async (req, res) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+    const user = await User.findById(req.user.id);
+
+    if (oldPassword !== user.password) {
+      res.status(401).json({ message: "Old password doesn't match!" });
+      return;
+    }
+    user.password = newPassword;
+    const result = await user.save();
+    console.log(`Change password: ${result}`);
+    res.status(201).json({ message: "Password changed!" });
+    return;
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ message: 'Server Error' });
+  }
+
+};
 const updateUser = async (req, res) => {
   try {
     await User.findByIdAndUpdate(req.params?.id, req.body);
@@ -55,5 +75,6 @@ module.exports = {
   getOneUser,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  changeUserPassword
 };
