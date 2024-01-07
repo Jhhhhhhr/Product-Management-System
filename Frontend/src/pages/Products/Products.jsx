@@ -36,7 +36,7 @@ export default function Products(props) {
     ];
 
     const menuProps = {
-        dropdownItems,
+        items: dropdownItems,
         onClick: handleMenuClick,
     };
 
