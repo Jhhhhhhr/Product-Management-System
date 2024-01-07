@@ -1,6 +1,18 @@
 .products-page {
     margin-left: 2%;
 }
+.products-page-header {
+    display: flex;
+    justify-content: space-between;
+}
+.products-page-header-buttons {
+    display: flex;
+}
+.products-page-header-buttons > * {
+    margin-right: 2vw;
+    margin-top: 2vw;
+}
+
 .products-list {
     padding: 2vw;
 }
@@ -21,4 +33,8 @@
 
 .product_info{
     flex: 1;
+}
+
+.add-to-cart-button {
+    width: 100%;
 }

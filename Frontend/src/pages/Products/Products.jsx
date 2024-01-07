@@ -1,44 +1,75 @@
-import { Card, List } from 'antd';
+import { useState, useEffect } from "react";
+import { Card, List, Button, Dropdown, Space } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 import "./Products.css"
 
-export default function Products() {
-    const productsData = [
+export default function Products(props) {
+    const { isAdmin } = props;
+    const [products, setProducts] = useState([]);
+    const [menuTitle, setMenuTitle] = useState('Last added');
+
+    const handleMenuClick = (e) => {
+        const newSortLable = dropdownItems[e.key - 1].label;
+        setMenuTitle(newSortLable);
+        if (newSortLable === 'Price: low to high') {
+            setProducts([...products].sort((a, b) => a.price - b.price));
+        } else if (newSortLable === 'Price: high to low') {
+            setProducts([...products].sort((a, b) => b.price - a.price));
+        } else {
+            setProducts([...products].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
+        }
+    };
+
+    const dropdownItems = [
         {
-            src: "https://media.gamestop.com/i/gamestop/20006782?$pdp2x$",
-            name: "Meta Quest1 VR headset",
-            price: "$199"
+            label: 'Last added',
+            key: '1',
         },
         {
-            src: "https://media.gamestop.com/i/gamestop/20006782?$pdp2x$",
-            name: "Meta Quest2 VR headset",
-            price: "$299"
+            label: 'Price: low to high',
+            key: '2',
         },
         {
-            src: "https://media.gamestop.com/i/gamestop/20006782?$pdp2x$",
-            name: "Meta Quest3 VR headset",
-            price: "$399"
-        },
-        {
-            src: "https://media.gamestop.com/i/gamestop/20006782?$pdp2x$",
-            name: "Meta Quest4 VR headset",
-            price: "$499"
-        },
-        {
-            src: "https://media.gamestop.com/i/gamestop/20006782?$pdp2x$",
-            name: "Meta Quest5 VR headset",
-            price: "$599"
-        },
-        {
-            src: "https://media.gamestop.com/i/gamestop/20006782?$pdp2x$",
-            name: "Meta Quest6 VR headset",
-            price: "$699"
+            label: 'Price: high to low',
+            key: '3',
         },
     ];
+
+    const menuProps = {
+        items: dropdownItems,
+        onClick: handleMenuClick,
+    };
+
+    useEffect(() => {
+        fetch("http://localhost:3000/api/products")
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                setProducts([...data].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
+            })
+            .catch((error) => console.error("Error fetching data: ", error));
+    }, []);
+
     return (
         <div id='content' className='products-page'>
-            <h2>Products Main Page</h2>
+            <div className="products-page-header">
+                <h2>Products Page</h2>
+                <div className="products-page-header-buttons">
+                    <Dropdown className="sorting-dropdown" menu={menuProps}>
+                        <Button>
+                            <Space>
+                                {menuTitle}
+                                <DownOutlined />
+                            </Space>
+                        </Button>
+                    </Dropdown>
+                    {isAdmin && <Button type="primary" className="add-to-cart-button">Add product</Button>}
+                </div>
+
+            </div>
+
             <List
-            className='products-list'
+                className='products-list'
                 grid={{
                     gutter: 16,
                     xs: 1,
@@ -48,25 +79,24 @@ export default function Products() {
                     xl: 6,
                     xxl: 8,
                 }}
-                dataSource={productsData}
-                renderItem={(item) => (
+                dataSource={products}
+                renderItem={(product) => (
                     <List.Item>
                         <Card className='product_card'>
                             <div >
                                 <div className='product_img_container'>
-                                    <img className='product_img' src={item.src}></img>
+                                    <img className='product_img' src={product.imgURL}></img>
                                 </div>
                                 <div className='product_info'>
-                                    <p>{item.name}</p>
-                                    <p>{item.price}</p>
+                                    <p>{product.name}</p>
+                                    <p>${product.price}</p>
                                 </div>
+                                <Button type="primary" className="add-to-cart-button">Add to cart</Button>
                             </div>
-
                         </Card>
                     </List.Item>
                 )}
             />
         </div>
-
     )
 }
