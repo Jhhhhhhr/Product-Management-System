@@ -8,14 +8,16 @@ import './App.css'
 
 function App() {
   const [username, setUsername] = useState("");
-  const [isAdmin, setIsAdmin] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  const handleLogin = (usernm) => {
+  const handleLogin = (usernm, isadmin) => {
     setUsername(usernm);
+    setIsAdmin(isadmin);
   };
 
   const handleSignout = () => {
     setUsername("");
+    setIsAdmin(false);
   };
 
   return (

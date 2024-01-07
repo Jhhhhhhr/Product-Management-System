@@ -8,6 +8,9 @@
 .products-page-header-buttons {
     display: flex;
 }
+.product-card-buttons {
+    display: flex;
+}
 .products-page-header-buttons > * {
     margin-right: 2vw;
     margin-top: 2vw;
@@ -35,6 +38,6 @@
     flex: 1;
 }
 
-.add-to-cart-button {
+.card-button {
     width: 100%;
 }

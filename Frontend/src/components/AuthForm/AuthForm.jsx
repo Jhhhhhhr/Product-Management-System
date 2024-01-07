@@ -1,4 +1,4 @@
-import { LockOutlined, MailOutlined, CloseOutlined } from '@ant-design/icons';
+import { LockOutlined, MailOutlined, CloseOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import { useNavigate, Link } from "react-router-dom";
 import './AuthForm.css'
@@ -6,34 +6,64 @@ import './AuthForm.css'
 const AuthForm = (props) => {
     const { type, handleLogin } = props;
     const navigate = useNavigate();
+    const [form] = Form.useForm();
 
-    const onFinish = (values) => {
-        console.log('Received values of form: ', values);
+    const onFinish = async (values) => {
         const { username, password } = values;
-        // need more backend support here
+
         if (type === "signIn") {
-            if (username === "qwe" && password === "123") {
-                handleLogin(username);
+            try {
+                const response = await fetch('http://localhost:3000/auth/signin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                handleLogin(username, data.isAdmin);
                 navigate("/");
-            } else {
-                alert("Invalid username or password!")
+            } catch (error) {
+                alert('Wrong username or password!')
+                console.error('Login failed:', error);
             }
         }
 
-        // need more backend support here
         if (type === "signUp") {
-            handleLogin(username);
-            navigate("/");
+            const { email } = values;
+            try {
+                const response = await fetch('http://localhost:3000/auth/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password, email }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                navigate("/signin");
+            } catch (error) {
+                alert('Invalid credentials!')
+                console.error('Login failed:', error);
+            }
         }
+        form.resetFields();     // reset form input fields
     };
     return (
         <div id='content' className='form-container'>
             <Form
+                form={form}
                 name="normal_login"
                 className="login-form"
-                initialValues={{
-                    remember: true,
-                }}
                 onFinish={onFinish}
             >
                 <div className='close-outlined'><CloseOutlined /></div>
@@ -47,18 +77,31 @@ const AuthForm = (props) => {
                     rules={[
                         {
                             required: true,
-                            message: 'Please input your Username!',
+                            message: 'Please input your username!',
                         },
                     ]}
                 >
-                    <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email" />
+                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
                 </Form.Item>
+                {type === 'signUp' &&
+                    <Form.Item
+                        name="email"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your email!',
+                            },
+                        ]}
+                    >
+                        <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email" />
+                    </Form.Item>
+                }
                 <Form.Item
                     name="password"
                     rules={[
                         {
                             required: true,
-                            message: 'Please input your Password!',
+                            message: 'Please input your password!',
                         },
                     ]}
                 >
@@ -77,11 +120,9 @@ const AuthForm = (props) => {
                     </Button>
                 </Form.Item>
 
-
                 {type === 'signIn' &&
                     <Form.Item>
                         Don't have an account?  <Link to="/signup">Sign up</Link>
-                        {/* <p>Don't have an account? </p><Link to="#">Sign up</Link> */}
                         <a className="login-form-forgot" href="">
                             Forgot password?
                         </a>
@@ -91,13 +132,11 @@ const AuthForm = (props) => {
                 {type === 'signUp' &&
                     <Form.Item>
                         Already have an account? <Link to="/signin">Sign in</Link>
-                        {/* <p>Already have an account? </p><Link to="#">Sign up</Link> */}
                     </Form.Item>
                 }
 
             </Form>
         </div>
-
     );
 };
 export default AuthForm;
