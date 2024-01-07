@@ -1,23 +1,29 @@
 .products-page {
-    margin-left: 2%;
+    padding-bottom: 2vw;
 }
+
 .products-page-header {
+    padding-left: 2vw;
     display: flex;
     justify-content: space-between;
 }
+
 .products-page-header-buttons {
     display: flex;
 }
+
 .product-card-buttons {
     display: flex;
 }
+
 .products-page-header-buttons > * {
     margin-right: 2vw;
     margin-top: 2vw;
 }
 
 .products-list {
-    padding: 2vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
 }
 .product_card {
     max-width: 300px;
@@ -40,4 +46,10 @@
 
 .card-button {
     width: 100%;
+}
+
+.pagination {
+    display: flex;
+    justify-content: end;
+    margin-right: 2vw;
 }
