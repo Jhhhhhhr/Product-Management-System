@@ -8,6 +8,7 @@ import './App.css'
 
 function App() {
   const [username, setUsername] = useState("");
+  const [isAdmin, setIsAdmin] = useState(true);
 
   const handleLogin = (usernm) => {
     setUsername(usernm);
@@ -22,7 +23,7 @@ function App() {
       <Router>
         <Header username={username} handleSignout={handleSignout}/>
         <Routes>
-          <Route path="/" element={<Products />} />
+          <Route path="/" element={<Products isAdmin={isAdmin}/>} />
           <Route path="/signin" element={<AuthForm type="signIn" handleLogin={handleLogin} />} />
           <Route path="/signup" element={<AuthForm type="signUp" handleLogin={handleLogin} />} />
           <Route path="/update-password" element={<AuthForm type="updatePassword" />} />
