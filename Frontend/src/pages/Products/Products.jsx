@@ -65,13 +65,11 @@ export default function Products(props) {
                     </Dropdown>
                     {isAdmin && <Button type="primary" className="add-to-cart-button">Add product</Button>}
                 </div>
-
             </div>
-
             <List
                 className='products-list'
                 grid={{
-                    gutter: 16,
+                    gutter: 10,
                     xs: 1,
                     sm: 2,
                     md: 4,
@@ -91,7 +89,10 @@ export default function Products(props) {
                                     <p>{product.name}</p>
                                     <p>${product.price}</p>
                                 </div>
-                                <Button type="primary" className="add-to-cart-button">Add to cart</Button>
+                                <div className="product-card-buttons">
+                                    <Button type="primary" className="card-button">Add</Button>
+                                    {isAdmin && <Button className="card-button">Edit</Button>}                                    
+                                </div>
                             </div>
                         </Card>
                     </List.Item>
