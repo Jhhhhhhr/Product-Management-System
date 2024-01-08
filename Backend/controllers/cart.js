@@ -14,11 +14,13 @@ const upertItem = async (req, res) => {
                 cart.items.push({ productID, quantity });
             }
             cart = await cart.save();
+            cart = await cart.populate('items.productID')
             console.log("A cart is updated. ")
             res.status(201).json(cart);
         } else {
             cart = new Cart({ userID, items: [{ productID, quantity }] });
             cart = await cart.save();
+            cart = await cart.populate('items.productID')
             console.log(`A new cart is created for user: ${userID}`);
             res.status(201).json(cart);
         }
@@ -89,6 +91,7 @@ const deleteOneCartItem = async (req, res) => {
             } else {
                 cart.items.splice(idx, 1);
                 cart = await cart.save();
+                cart = await cart.populate('items.productID');
                 console.log("A cart item is deleted");
                 res.status(200).json(cart);
                 return;
