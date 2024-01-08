@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Card, List, Button, Dropdown, Space } from 'antd';
+import { Card, List, Button, Dropdown, Space, Pagination } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import "./Products.css"
 
@@ -7,6 +7,14 @@ export default function Products(props) {
     const { isAdmin } = props;
     const [products, setProducts] = useState([]);
     const [menuTitle, setMenuTitle] = useState('Last added');
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const pageSize = 10;
+
+    const currentProducts = products.slice(
+        (currentPage - 1) * pageSize,
+        currentPage * pageSize
+      );
 
     const handleMenuClick = (e) => {
         const newSortLable = dropdownItems[e.key - 1].label;
@@ -53,7 +61,7 @@ export default function Products(props) {
     return (
         <div id='content' className='products-page'>
             <div className="products-page-header">
-                <h2>Products Page</h2>
+                <h1>Products</h1>
                 <div className="products-page-header-buttons">
                     <Dropdown className="sorting-dropdown" menu={menuProps}>
                         <Button>
@@ -69,15 +77,14 @@ export default function Products(props) {
             <List
                 className='products-list'
                 grid={{
-                    gutter: 10,
+                    gutter: 16,
                     xs: 1,
                     sm: 2,
-                    md: 4,
+                    md: 3,
                     lg: 4,
-                    xl: 6,
-                    xxl: 8,
+                    xl: 5,
                 }}
-                dataSource={products}
+                dataSource={currentProducts}
                 renderItem={(product) => (
                     <List.Item>
                         <Card className='product_card'>
@@ -98,6 +105,7 @@ export default function Products(props) {
                     </List.Item>
                 )}
             />
+            <Pagination className="pagination" current={currentPage} pageSize={pageSize} total={products.length} onChange={page => setCurrentPage(page)}/>
         </div>
     )
 }
