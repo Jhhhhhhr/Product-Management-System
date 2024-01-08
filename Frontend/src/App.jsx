@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import AuthForm from "./components/AuthForm/AuthForm";
+import ErrorPage from "./components/ErrorPage/ErrorPage";
 import Products from "./pages/Products/Products";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import CreateProduct from "./pages/CreateProduct/CreateProduct";
@@ -34,6 +35,7 @@ function App() {
         <Header username={username} handleSignout={handleSignout} />
         <Routes>
           <Route path="/" element={<Products isAdmin={isAdmin} />} />
+          <Route path="/error" element={<ErrorPage />} />
           <Route
             path="/signin"
             element={<AuthForm type="signIn" handleLogin={handleLogin} />}
