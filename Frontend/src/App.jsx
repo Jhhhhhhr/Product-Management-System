@@ -4,6 +4,8 @@ import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
 import AuthForm from './components/AuthForm/AuthForm';
 import Products from './pages/Products/Products';
+import ProductDetail from "./pages/ProductDetail/ProductDetail";
+import CreateProduct from "./pages/CreateProduct/CreateProduct";
 import './App.css'
 
 function App() {
@@ -29,6 +31,8 @@ function App() {
           <Route path="/signin" element={<AuthForm type="signIn" handleLogin={handleLogin} />} />
           <Route path="/signup" element={<AuthForm type="signUp" handleLogin={handleLogin} />} />
           <Route path="/update-password" element={<AuthForm type="updatePassword" />} />
+          <Route path="/product" element={<ProductDetail></ProductDetail>}></Route>
+          <Route path="/create-product" element={<CreateProduct></CreateProduct>}></Route>
         </Routes>
       </Router>
       <Footer />
