@@ -63,10 +63,9 @@ const AuthForm = (props) => {
                     body: JSON.stringify({ email })
                 });
                 const responseData = await response.text();
-                // const responseData = await response.json();
                 setPromptMsg(responseData);
                 if (!response.ok) {
-                    throw new Error(responseData.message || `HTTP error! status: ${response.status}`);
+                    throw new Error(responseData || `HTTP error! status: ${response.status}`);
                 }
             } catch (error) {
                 console.error('Failed to request password reset:', error);
@@ -203,14 +202,12 @@ const AuthForm = (props) => {
                         {type === 'resetPassword' && 'Change password'}
                     </Button>
                 </Form.Item>
-
                 {type === 'signIn' &&
                     <Form.Item>
                         Don't have an account?  <Link to="/signup">Sign up</Link>
                         <Link className="login-form-forgot" to="/update-password">Forgot password?</Link>
                     </Form.Item>
                 }
-
                 {type === 'signUp' &&
                     <Form.Item>
                         Already have an account? <Link to="/signin">Sign in</Link>
