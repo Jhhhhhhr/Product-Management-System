@@ -14,11 +14,13 @@ const upertItem = async (req, res) => {
                 cart.items.push({ productID, quantity });
             }
             cart = await cart.save();
+            cart = await cart.populate('items.productID')
             console.log("A cart is updated. ")
             res.status(201).json(cart);
         } else {
             cart = new Cart({ userID, items: [{ productID, quantity }] });
             cart = await cart.save();
+            cart = await cart.populate('items.productID')
             console.log(`A new cart is created for user: ${userID}`);
             res.status(201).json(cart);
         }
@@ -31,7 +33,7 @@ const upertItem = async (req, res) => {
 const getAllCartItems = async (req, res) => {
     try {
         const userID = req.user.id;
-        const cart = await Cart.findOne({ userID });
+        const cart = await Cart.findOne({ userID }).populate('items.productID');
 
         res.status(200).json(cart);
     } catch (err) {
@@ -41,7 +43,7 @@ const getAllCartItems = async (req, res) => {
 }
 const getAllCarts = async (req, res) => {
     try {
-        const carts = await Cart.find();
+        const carts = await Cart.find().populate('items.productID');
         res.status(200).json(carts);
     } catch (err) {
         console.error(err.message);
@@ -89,6 +91,7 @@ const deleteOneCartItem = async (req, res) => {
             } else {
                 cart.items.splice(idx, 1);
                 cart = await cart.save();
+                cart = await cart.populate('items.productID');
                 console.log("A cart item is deleted");
                 res.status(200).json(cart);
                 return;
