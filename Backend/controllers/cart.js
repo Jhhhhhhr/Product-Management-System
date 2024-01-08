@@ -31,7 +31,7 @@ const upertItem = async (req, res) => {
 const getAllCartItems = async (req, res) => {
     try {
         const userID = req.user.id;
-        const cart = await Cart.findOne({ userID });
+        const cart = await Cart.findOne({ userID }).populate('items.productID');
 
         res.status(200).json(cart);
     } catch (err) {
@@ -41,7 +41,7 @@ const getAllCartItems = async (req, res) => {
 }
 const getAllCarts = async (req, res) => {
     try {
-        const carts = await Cart.find();
+        const carts = await Cart.find().populate('items.productID');
         res.status(200).json(carts);
     } catch (err) {
         console.error(err.message);
