@@ -2,7 +2,9 @@ const express = require("express");
 const {
     upertItem,
     getAllCarts,
-    getAllCartItems
+    getAllCartItems,
+    deleteAllCartItems,
+    deleteOneCartItem
 } = require("../controllers/cart");
 
 const {
@@ -15,5 +17,6 @@ const router = express.Router();
 router.get('/carts', getAllCarts);
 router.post('/cart', authenticate, upertItem);
 router.get('/cart', authenticate, getAllCartItems);
-
+router.delete('/cart', authenticate, deleteAllCartItems);
+router.delete('/cart/:id', authenticate, deleteOneCartItem);
 module.exports = router;
