@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const authRouter = require('./routers/auth');
 const productRouter = require('./routers/product');
+const cartRouter = require('./routers/cart');
 const userRouter = require('./routers/users');
 
 const connectDB = require('./db');
@@ -17,6 +18,7 @@ app.use(express.json());
 
 app.use('/auth', authRouter);
 app.use('/api/users', userRouter);
+app.use('/api', cartRouter);
 /*
 
 app.use('/api/posts', postRouter);
