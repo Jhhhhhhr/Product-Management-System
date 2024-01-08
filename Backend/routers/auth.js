@@ -1,4 +1,4 @@
-const { checkEmpty, checkDuplicate } = require('../middlewares/validation');
+const { checkEmpty, checkDuplicate, checkIfEmailExist } = require('../middlewares/validation');
 const { authenticate } = require('../middlewares/auth');
 const { createUser, changeUserPassword } = require('../controllers/user')
 const express = require('express');
@@ -47,7 +47,7 @@ router.post('/signin', async (req, res, next) => {
 });
 
 // /auth/request-reset-password
-router.post("/request-reset-password", async (req, res) => {
+router.post("/request-reset-password", checkIfEmailExist, async (req, res) => {
   try {
     const { email } = req.body;
     const user = await User.findOne({ email });
@@ -68,7 +68,7 @@ router.post("/request-reset-password", async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail", 
       auth: {
-        user: "ethanyee1234@gmail.com", 
+        user: process.env.GMAIL_USER, 
         pass: process.env.GMAIL_PASS
       }
     });

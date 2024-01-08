@@ -28,8 +28,23 @@ const checkDuplicate = async (req, res, next) => {
         res.status(500).json({ message: 'Server Error' });
     }
 }
+const checkIfEmailExist = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+        user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).send("Email not exist, please signup first");
+        }
+        next();
+        return;
+    } catch (error) {
+        console.error(err.message);
+        res.status(500).json({ message: 'Server Error' });
+    }
+}
 
 module.exports = {
     checkEmpty,
-    checkDuplicate
+    checkDuplicate,
+    checkIfEmailExist
 }

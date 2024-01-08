@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Card, List, Button, Dropdown, Space, Pagination } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import "./Products.css"
@@ -14,7 +15,7 @@ export default function Products(props) {
     const currentProducts = products.slice(
         (currentPage - 1) * pageSize,
         currentPage * pageSize
-      );
+    );
 
     const handleMenuClick = (e) => {
         const newSortLable = dropdownItems[e.key - 1].label;
@@ -70,7 +71,7 @@ export default function Products(props) {
                             </Space>
                         </Button>
                     </Dropdown>
-                    {isAdmin && <Button type="primary" className="add-to-cart-button">Add product</Button>}
+                    {isAdmin && <Link to="/create-product"><Button type="primary" className="add-to-cart-button">Add product</Button></Link>}
                 </div>
             </div>
             <List
@@ -104,7 +105,7 @@ export default function Products(props) {
                     </List.Item>
                 )}
             />
-            <Pagination className="pagination" current={currentPage} pageSize={pageSize} total={products.length} onChange={page => setCurrentPage(page)}/>
+            <Pagination className="pagination" current={currentPage} pageSize={pageSize} total={products.length} onChange={page => setCurrentPage(page)} />
         </div>
     )
 }

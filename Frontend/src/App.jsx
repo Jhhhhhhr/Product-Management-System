@@ -9,17 +9,21 @@ import CreateProduct from "./pages/CreateProduct/CreateProduct";
 import './App.css'
 
 function App() {
-  const [username, setUsername] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [username, setUsername] = useState(localStorage.getItem('username') || "");
+  const [isAdmin, setIsAdmin] = useState(localStorage.getItem('isAdmin') === 'true');
 
   const handleLogin = (usernm, isadmin) => {
     setUsername(usernm);
     setIsAdmin(isadmin);
+    localStorage.setItem('username', usernm);
+    localStorage.setItem('isAdmin', isadmin.toString());
   };
 
   const handleSignout = () => {
     setUsername("");
     setIsAdmin(false);
+    localStorage.removeItem('username');
+    localStorage.removeItem('isAdmin');
   };
 
   return (
