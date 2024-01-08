@@ -31,6 +31,7 @@ function App() {
           <Route path="/signin" element={<AuthForm type="signIn" handleLogin={handleLogin} />} />
           <Route path="/signup" element={<AuthForm type="signUp" handleLogin={handleLogin} />} />
           <Route path="/update-password" element={<AuthForm type="updatePassword" />} />
+          <Route path="/reset-password/:token" element={<AuthForm type="resetPassword" />} />
           <Route path="/product" element={<ProductDetail></ProductDetail>}></Route>
           <Route path="/create-product" element={<CreateProduct></CreateProduct>}></Route>
         </Routes>
