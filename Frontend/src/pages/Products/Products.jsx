@@ -52,7 +52,6 @@ export default function Products(props) {
         fetch("http://localhost:3000/api/products")
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 setProducts([...data].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
             })
             .catch((error) => console.error("Error fetching data: ", error));
