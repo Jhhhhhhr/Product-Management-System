@@ -28,7 +28,8 @@ export default function CreateProduct() {
     <div id="content">
       <h4
         style={{
-          paddingLeft: "20%",
+          marginLeft: "20%",
+          marginBottom:"1em",
           fontFamily: "Inter",
           fontSize: "32px",
           fontWeight: "700",

@@ -53,7 +53,7 @@ function App() {
             element={<AuthForm type="resetPassword" />}
           />
           <Route
-            path="/product"
+            path="/product/:id"
             element={<ProductDetail></ProductDetail>}
           ></Route>
           <Route
