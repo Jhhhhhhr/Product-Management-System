@@ -5,7 +5,7 @@ import { DownOutlined } from '@ant-design/icons';
 import "./Products.css"
 
 export default function Products(props) {
-    const { isAdmin } = props;
+    const { isAdmin, username } = props;
     const [products, setProducts] = useState([]);
     const [menuTitle, setMenuTitle] = useState('Last added');
     const [currentPage, setCurrentPage] = useState(1);
@@ -54,6 +54,7 @@ export default function Products(props) {
         fetch("http://localhost:3000/api/products")
             .then((response) => response.json())
             .then((data) => {
+                console.log(data);
                 setProducts([...data].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
             })
             .catch((error) => console.error("Error fetching data: ", error));
@@ -98,7 +99,7 @@ export default function Products(props) {
                                     <p>${product.price}</p>
                                 </div>
                                 <div className="product-card-buttons">
-                                    <Button type="primary" className="card-button">Add</Button>
+                                    {username && <Button type="primary" className="card-button">Add</Button>}
                                     {isAdmin && <Button className="card-button">Edit</Button>}                                    
                                 </div>
                             </div>
