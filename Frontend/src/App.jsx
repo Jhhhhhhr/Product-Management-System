@@ -2,14 +2,14 @@ import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import AuthForm from "./components/AuthForm/AuthForm";
-import ErrorPage from "./components/ErrorPage/ErrorPage";
+import AuthForm from "./pages/AuthForm/AuthForm";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import Products from "./pages/Products/Products";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import CreateProduct from "./pages/CreateProduct/CreateProduct";
 import "./App.css";
 
-import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
+// import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 
 function App() {
   const [username, setUsername] = useState(localStorage.getItem('username') || "");
@@ -34,15 +34,14 @@ function App() {
       <Router>
         <Header username={username} handleSignout={handleSignout} />
         <Routes>
-          <Route path="/" element={<Products isAdmin={isAdmin} />} />
-          <Route path="/error" element={<ErrorPage />} />
+          <Route path="/" element={<Products isAdmin={isAdmin} username={username} />} />
           <Route
             path="/signin"
             element={<AuthForm type="signIn" handleLogin={handleLogin} />}
           />
           <Route
             path="/signup"
-            element={<AuthForm type="signUp" handleLogin={handleLogin} />}
+            element={<AuthForm type="signUp" />}
           />
           <Route
             path="/update-password"
@@ -60,9 +59,10 @@ function App() {
             path="/create-product"
             element={<CreateProduct></CreateProduct>}
           ></Route>
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Router>
-      <ShoppingCart token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU5OGYwZGRiYzI5MzhjYWIyODRlMmJiIn0sImlhdCI6MTcwNDY3Nzc0MywiZXhwIjoxNzA3MjY5NzQzfQ.gKANlzZ0JnlwWQOf1Y3V2qMWXKLADJFsGVi6WYi8O4c" />
+      {/* <ShoppingCart token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU5OGYwZGRiYzI5MzhjYWIyODRlMmJiIn0sImlhdCI6MTcwNDY3Nzc0MywiZXhwIjoxNzA3MjY5NzQzfQ.gKANlzZ0JnlwWQOf1Y3V2qMWXKLADJFsGVi6WYi8O4c" /> */}
       <Footer />
     </>
   );
