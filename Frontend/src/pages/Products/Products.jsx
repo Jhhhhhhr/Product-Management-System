@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Card, List, Button, Dropdown, Space, Pagination } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import "./Products.css"
@@ -9,6 +9,7 @@ export default function Products(props) {
     const [products, setProducts] = useState([]);
     const [menuTitle, setMenuTitle] = useState('Last added');
     const [currentPage, setCurrentPage] = useState(1);
+    const navigate = useNavigate();
 
     const pageSize = 10;
 
@@ -89,8 +90,8 @@ export default function Products(props) {
                     <List.Item>
                         <Card className='product_card'>
                             <div >
-                                <div className='product_img_container'>
-                                    <img className='product_img' src={product.imgURL}></img>
+                                <div className='product_img_container' onClick={() => navigate(`/product/${product.id}`)}>
+                                    <img className='product_img' src={product.imgURL} alt="Image Not Available"></img>
                                 </div>
                                 <div className='product_info'>
                                     <p>{product.name}</p>
