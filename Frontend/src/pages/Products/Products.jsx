@@ -91,7 +91,7 @@ export default function Products(props) {
                     <List.Item>
                         <Card className='product_card'>
                             <div >
-                                <div className='product_img_container' onClick={() => navigate(`/product/${product.id}`)}>
+                                <div className='product_img_container' onClick={() => navigate(`/product/${product._id}`)}>
                                     <img className='product_img' src={product.imgURL} alt="Image Not Available"></img>
                                 </div>
                                 <div className='product_info'>
