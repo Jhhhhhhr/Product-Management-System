@@ -8,6 +8,7 @@
     padding-bottom: 1%;
     background-color: white;
     box-sizing: border-box;
+    flex: 1;
 }
 
 .create_product_label{
