@@ -100,7 +100,7 @@ export default function Products(props) {
                                 </div>
                                 <div className="product-card-buttons">
                                     {username && <Button type="primary" className="card-button">Add</Button>}
-                                    {isAdmin && <Button className="card-button">Edit</Button>}                                    
+                                    {isAdmin && <Button className="card-button" onClick={() => navigate(`/create-product/${product._id}`)}>Edit</Button>}                                    
                                 </div>
                             </div>
                         </Card>
