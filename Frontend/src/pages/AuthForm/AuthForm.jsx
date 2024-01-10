@@ -28,7 +28,7 @@ const AuthForm = (props) => {
                 if (!response.ok) {
                     throw new Error(responseData.message || `HTTP error! status: ${response.status}`);
                 }
-                handleLogin(username, responseData.isAdmin);
+                handleLogin(username, responseData.isAdmin, responseData.token);
                 navigate("/");
             } catch (error) {
                 alert(error.message);
