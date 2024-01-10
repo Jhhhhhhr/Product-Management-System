@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
@@ -8,25 +8,23 @@ import Products from "./pages/Products/Products";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import ManageProduct from "./pages/ManageProduct/ManageProduct";
 import "./App.css";
-
+import { useDispatch } from "react-redux";
+import { useSelector } from 'react-redux';
+import { logoutUser } from "./features/user/userSlice";
 // import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 
 function App() {
-  const [username, setUsername] = useState(localStorage.getItem('username') || "");
-  const [isAdmin, setIsAdmin] = useState(localStorage.getItem('isAdmin') === 'true');
-
+  //const [username, setUsername] = useState(localStorage.getItem('username') || "");
+  const dispatch = useDispatch();
+  const {username, isAdmin, token} = useSelector(state=>state.user.info);  
+  
   const handleLogin = (usernm, isadmin) => {
-    setUsername(usernm);
-    setIsAdmin(isadmin);
-    localStorage.setItem('username', usernm);
-    localStorage.setItem('isAdmin', isadmin.toString());
+    
   };
 
   const handleSignout = () => {
-    setUsername("");
-    setIsAdmin(false);
-    localStorage.removeItem('username');
-    localStorage.removeItem('isAdmin');
+    dispatch(logoutUser());
+    console.log("User logged out");
   };
 
   return (
