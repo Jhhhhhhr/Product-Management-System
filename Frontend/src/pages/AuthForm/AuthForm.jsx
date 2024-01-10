@@ -4,31 +4,24 @@ import { useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import './AuthForm.css'
 
+import { useDispatch } from 'react-redux';
+import { fetchUserInfo, logoutUser } from '../../features/user/userSlice';
+
 const AuthForm = (props) => {
     const { type, handleLogin } = props;
     const [promptMsg, setPromptMsg] = useState('Enter your email, we will send you the recovery link');
     const navigate = useNavigate();
     const [form] = Form.useForm();
     const { token } = useParams();
-
+    const dispatch = useDispatch();
     const onFinish = async (values) => {
         const { username, password } = values;
 
         if (type === "signIn") {
             try {
-                const response = await fetch('http://localhost:3000/auth/signin', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ username, password }),
-                });
+                await dispatch(fetchUserInfo({username, password})).unwrap();
+                //handleLogin(username, responseData.isAdmin);
 
-                const responseData = await response.json();
-                if (!response.ok) {
-                    throw new Error(responseData.message || `HTTP error! status: ${response.status}`);
-                }
-                handleLogin(username, responseData.isAdmin, responseData.token);
                 navigate("/");
             } catch (error) {
                 alert(error.message);
