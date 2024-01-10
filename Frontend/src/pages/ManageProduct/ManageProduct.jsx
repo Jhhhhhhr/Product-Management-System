@@ -1,10 +1,13 @@
-import "./CreateProduct.css";
+import "./ManageProduct.css";
 import { Input, Dropdown, Button, Space, Empty } from "antd";
+import { useParams } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
 import blankImage from "../../assets/bi_file-earmark-image.png";
 const { TextArea } = Input;
 
-export default function CreateProduct() {
+export default function ManageProduct() {
+  const { productId } = useParams();
+
   const categories = [
     {
       key: "0",
