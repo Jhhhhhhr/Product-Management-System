@@ -40,7 +40,7 @@ router.post('/signin', async (req, res, next) => {
     });
 
     console.log(`User:${user} login`);
-    res.json({ token, isAdmin: user.isAdmin });
+    res.json({ token, isAdmin: user.isAdmin, username: user.username });
   } catch (err) {
     next(err);
   }
@@ -66,9 +66,9 @@ router.post("/request-reset-password", checkIfEmailExist, async (req, res) => {
 
     // configure the reset password invitation email
     const transporter = nodemailer.createTransport({
-      service: "gmail", 
+      service: "gmail",
       auth: {
-        user: process.env.GMAIL_USER, 
+        user: process.env.GMAIL_USER,
         pass: process.env.GMAIL_PASS
       }
     });
