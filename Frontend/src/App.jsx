@@ -6,7 +6,7 @@ import AuthForm from "./pages/AuthForm/AuthForm";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import Products from "./pages/Products/Products";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
-import CreateProduct from "./pages/CreateProduct/CreateProduct";
+import ManageProduct from "./pages/ManageProduct/ManageProduct";
 import "./App.css";
 
 // import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
@@ -58,7 +58,11 @@ function App() {
           ></Route>
           <Route
             path="/create-product"
-            element={<CreateProduct></CreateProduct>}
+            element={<ManageProduct></ManageProduct>}
+          ></Route>
+          <Route
+            path="/edit-product/:productId"
+            element={<ManageProduct></ManageProduct>}
           ></Route>
           <Route path="*" element={<ErrorPage />} />
         </Routes>
