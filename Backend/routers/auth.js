@@ -1,6 +1,5 @@
 const { checkEmpty, checkDuplicate, checkIfEmailExist } = require('../middlewares/validation');
-const { authenticate } = require('../middlewares/auth');
-const { createUser, changeUserPassword } = require('../controllers/user')
+const { createUser } = require('../controllers/user')
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const crypto = require("crypto");
@@ -118,7 +117,5 @@ router.post('/reset-password/:token', async (req, res) => {
 
 // /auth/signup
 router.post('/signup', checkEmpty, checkDuplicate, createUser);
-// /auth/resetPassword
-router.put('/resetPassword', authenticate, changeUserPassword);
 
 module.exports = router;

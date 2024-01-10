@@ -21,6 +21,7 @@ const AuthForm = (props) => {
             try {
                 await dispatch(fetchUserInfo({username, password})).unwrap();
                 //handleLogin(username, responseData.isAdmin);
+
                 navigate("/");
             } catch (error) {
                 alert(error.message);
