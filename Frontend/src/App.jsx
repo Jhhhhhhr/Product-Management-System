@@ -15,11 +15,12 @@ function App() {
   const [username, setUsername] = useState(localStorage.getItem('username') || "");
   const [isAdmin, setIsAdmin] = useState(localStorage.getItem('isAdmin') === 'true');
 
-  const handleLogin = (usernm, isadmin) => {
+  const handleLogin = (usernm, isadmin, token) => {
     setUsername(usernm);
     setIsAdmin(isadmin);
     localStorage.setItem('username', usernm);
     localStorage.setItem('isAdmin', isadmin.toString());
+    localStorage.setItem('token', token);
   };
 
   const handleSignout = () => {
