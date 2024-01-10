@@ -5,7 +5,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import './AuthForm.css'
 
 import { useDispatch } from 'react-redux';
-import { fetchUserInfo } from '../../features/user/userSlice';
+import { fetchUserInfo, logoutUser } from '../../features/user/userSlice';
 
 const AuthForm = (props) => {
     const { type, handleLogin } = props;

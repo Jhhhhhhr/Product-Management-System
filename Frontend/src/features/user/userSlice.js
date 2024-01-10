@@ -33,6 +33,7 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         logoutUser: (state) => {
+            //console.log("Logout user");
             state.info = {
                 token: null,
                 username: "",
@@ -46,7 +47,14 @@ export const userSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchUserInfo.pending, (state) => {
+                state.info = {
+                    token: null,
+                    username: "",
+                    isAdmin: false
+                }
                 state.loading = true;
+                state.error = null;
+                removeLocalStorage();
             })
             .addCase(fetchUserInfo.fulfilled, (state, action) => {
                 state.info = action.payload;
@@ -54,7 +62,7 @@ export const userSlice = createSlice({
                 saveToLocalStorage(state);
             })
             .addCase(fetchUserInfo.rejected, (state, action) => {
-                //console.log(`action: ${action.error.message}`);
+                //console.log(`action: ${action.error.message}`);                
                 state.error = action.error.message || 'Failed to fetch user token';
                 state.loading = false;
             });
