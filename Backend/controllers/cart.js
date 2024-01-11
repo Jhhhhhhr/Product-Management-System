@@ -33,8 +33,12 @@ const upertItem = async (req, res) => {
 const getAllCartItems = async (req, res) => {
     try {
         const userID = req.user.id;
-        const cart = await Cart.findOne({ userID }).populate('items.productID');
-
+        let cart = await Cart.findOne({ userID }).populate('items.productID');
+        if (!cart) {
+            cart = new Cart({ userID });
+            cart = await cart.save();
+            console.log(`A new cart is created for user: ${userID}`);
+        }
         res.status(200).json(cart);
     } catch (err) {
         console.error(err.message);
@@ -56,6 +60,9 @@ const deleteAllCartItems = async (req, res) => {
         const userID = req.user.id;
         let cart = await Cart.findOne({ userID });
         if (!cart) {
+            cart = new Cart({ userID });
+            cart = await cart.save();
+            console.log(`A new cart is created for user: ${userID}`);
             res.status(200).json(cart);
         } else {
             cart.items = [];
