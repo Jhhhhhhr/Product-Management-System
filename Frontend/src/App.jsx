@@ -11,6 +11,7 @@ import "./App.css";
 import { useDispatch } from "react-redux";
 import { useSelector } from 'react-redux';
 import { logoutUser } from "./features/user/userSlice";
+import { fetchCart } from "./features/cart/cartSlice";
 // import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 
 function App() {
@@ -22,6 +23,14 @@ function App() {
     
 
   };
+
+  useEffect(()=> {
+    
+    if(token) {
+      console.log("Fetch cart!");
+      dispatch(fetchCart(token));
+    }
+  }, [token, dispatch]);
 
   const handleSignout = () => {
     dispatch(logoutUser());
