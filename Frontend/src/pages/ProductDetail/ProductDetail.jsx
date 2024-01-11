@@ -2,26 +2,27 @@ import styles from "./ProductDetail.module.css";
 import { Tag, Button } from "antd";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { addProductToCart } from "../../services/cart";
+import { useSelector, useDispatch } from "react-redux";
+import { updateCartItem } from "../../features/cart/cartSlice";
+import { fetchOneProductInfo } from "../../services/product";
 
 export default function ProductDetail() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { id } = useParams();
   const [detail, setDetail] = useState({});
   const { username, isAdmin, token } = useSelector((state) => state.user.info);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/products/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setDetail(data);
-      })
-      .catch((error) => console.error("Error fetching data: ", error));
+    fetchOneProductInfo(id)
+    .then((data)=>{
+      setDetail(data);
+    })
+    .catch((error) => console.error("Error fetching data: ", error));
   }, []);
 
   const onClickAddCart = () => {
-    addProductToCart(token, id, 1);
+    dispatch(updateCartItem(token, id, 1));
   }
 
   const onClickEditProduct = () =>{
