@@ -34,9 +34,6 @@ const initialState = {
     },
     loading: false,
     error: null,
-    update: {
-        loading: false
-    }
 };
 
 export const cartSlice = createSlice({
