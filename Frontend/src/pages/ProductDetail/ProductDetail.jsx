@@ -1,11 +1,15 @@
 import styles from "./ProductDetail.module.css";
 import { Tag, Button } from "antd";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { addProductToCart } from "../../services/cart";
 
 export default function ProductDetail() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [detail, setDetail] = useState({});
+  const { username, isAdmin, token } = useSelector((state) => state.user.info);
 
   useEffect(() => {
     fetch(`http://localhost:3000/api/products/${id}`)
@@ -15,6 +19,14 @@ export default function ProductDetail() {
       })
       .catch((error) => console.error("Error fetching data: ", error));
   }, []);
+
+  const onClickAddCart = () => {
+    addProductToCart(token, id, 1);
+  }
+
+  const onClickEditProduct = () =>{
+    navigate(`/edit-product/${id}`);
+  }
 
   return (
     <>
@@ -66,23 +78,30 @@ export default function ProductDetail() {
             </div>
             <p className={styles.pd_desc}>{detail.description}</p>
             <div className={styles.container}>
-              <Button
-                type="primary"
-                style={{ height: "40px", backgroundColor: "#5048E5" }}
-              >
-                Add To Cart
-              </Button>
-              <Button
-                type="primary"
-                style={{
-                  height: "40px",
-                  color: "#535353",
-                  backgroundColor: "#ffffff",
-                  border: "1px solid #CCCCCC",
-                }}
-              >
-                Edit
-              </Button>
+              {username && (
+                <Button
+                  type="primary"
+                  style={{ height: "40px", backgroundColor: "#5048E5" }}
+                  onClick={onClickAddCart}
+                >
+                  Add To Cart
+                </Button>
+              )}
+              {isAdmin && (
+                <Button
+                  type="primary"
+                  style={{
+                    height: "40px",
+                    color: "#535353",
+                    backgroundColor: "#ffffff",
+                    border: "1px solid #CCCCCC",
+                  }}
+
+                  onClick={onClickEditProduct}
+                >
+                  Edit
+                </Button>
+              )}
             </div>
           </div>
         </div>
