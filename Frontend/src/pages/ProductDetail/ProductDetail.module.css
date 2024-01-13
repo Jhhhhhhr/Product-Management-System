@@ -65,3 +65,28 @@
     align-items: center;
     gap: 10px;
 }
+
+.cart_button_container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #5048E5;
+    border-radius: 6px;
+}
+
+.cart_button{
+    height: 40px;
+    background-color: #5048E5;
+    color: white;
+    border-color: transparent;
+}
+
+.quantity_in_cart{
+    height: 40px;
+    color: white;
+    margin-left: 5px;
+    margin-right: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

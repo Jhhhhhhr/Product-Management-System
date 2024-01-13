@@ -158,7 +158,7 @@ export default function ManageProduct() {
           style={{ height: "40px", backgroundColor: "#5048E5" }}
           onClick={handleSubmit}
         >
-          Add Product
+          {productId?"Update Product":"Add Product"}
         </Button>
       </div>
     </div>
