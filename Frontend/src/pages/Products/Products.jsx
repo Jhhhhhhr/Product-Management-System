@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { Card, List, Button, Dropdown, Space, Pagination } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { updateCartItem } from "../../features/cart/cartSlice";
 import "./Products.css"
 
 export default function Products(props) {
@@ -10,6 +12,9 @@ export default function Products(props) {
     const [menuTitle, setMenuTitle] = useState('Last added');
     const [currentPage, setCurrentPage] = useState(1);
     const navigate = useNavigate();
+    const { token } = useSelector((state) => state.user.info);
+    const cartItems = useSelector((state) => state.cart.cart.items);
+    const dispatch = useDispatch();
 
     const pageSize = 10;
 
@@ -27,6 +32,32 @@ export default function Products(props) {
             setProducts([...products].sort((a, b) => b.price - a.price));
         } else {
             setProducts([...products].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
+        }
+    };
+
+    const handleAddToCart = (id) => {
+        dispatch(updateCartItem({ token, productID: id, quantity: 1 }));
+    }
+
+    const handlePlus = (productID, quantity) => async () => {
+        quantity += 1;
+        try {
+            await dispatch(updateCartItem({ token, productID, quantity })).unwrap();
+        } catch (e) {
+            alert(e.message);
+        }
+    };
+
+    const handleSubtract = (productID, quantity) => async () => {
+        quantity -= 1;
+        if (quantity <= 0) {
+            return;
+        }
+
+        try {
+            await dispatch(updateCartItem({ token, productID, quantity })).unwrap();
+        } catch (e) {
+            alert(e.message);
         }
     };
 
@@ -87,25 +118,40 @@ export default function Products(props) {
                     xl: 5,
                 }}
                 dataSource={currentProducts}
-                renderItem={(product) => (
-                    <List.Item>
-                        <Card className='product_card'>
-                            <div >
-                                <div className='product_img_container' onClick={() => navigate(`/product/${product._id}`)}>
-                                    <img className='product_img' src={product.imgURL} alt="Image Not Available"></img>
+                renderItem={(product) => {
+                    const cartItem = cartItems.find(item => item.productID._id === product._id);
+                    const quantityInCart = cartItem ? cartItem.quantity : 0;
+                    return (
+                        <List.Item>
+                            <Card className='product_card'>
+                                <div >
+                                    <div className='product_img_container' onClick={() => navigate(`/product/${product._id}`)}>
+                                        <img className='product_img' src={product.imgURL} alt="Image Not Available"></img>
+                                    </div>
+                                    <div className='product_info'>
+                                        <p>{product.name}</p>
+                                        <p>${product.price}</p>
+                                    </div>
+                                    <div className="product-card-buttons">
+                                        {quantityInCart > 0 ? (
+                                            <div className="change-cart-quantity">
+                                                <Button className="change-cart-quantity-button" icon={<MinusOutlined />} onClick={handleSubtract(product._id, quantityInCart)} />
+                                                <span className="product-quantity">{quantityInCart}</span>
+                                                <Button className="change-cart-quantity-button" icon={<PlusOutlined />} onClick={handlePlus(product._id, quantityInCart)} />
+                                            </div>
+                                        ) : (
+                                            <>
+                                                {username && <Button type="primary" className="card-button" onClick={() => handleAddToCart(product._id)}>Add</Button>}
+                                            </>
+                                        )}
+                                        {isAdmin && <Button className="card-button" onClick={() => navigate(`/edit-product/${product._id}`)}>Edit</Button>}
+                                    </div>
                                 </div>
-                                <div className='product_info'>
-                                    <p>{product.name}</p>
-                                    <p>${product.price}</p>
-                                </div>
-                                <div className="product-card-buttons">
-                                    {username && <Button type="primary" className="card-button">Add</Button>}
-                                    {isAdmin && <Button className="card-button" onClick={() => navigate(`/edit-product/${product._id}`)}>Edit</Button>}                                    
-                                </div>
-                            </div>
-                        </Card>
-                    </List.Item>
-                )}
+                            </Card>
+                        </List.Item>
+                    )
+                }
+                }
             />
             <Pagination className="pagination" current={currentPage} pageSize={pageSize} total={products.length} onChange={page => setCurrentPage(page)} />
         </div>
