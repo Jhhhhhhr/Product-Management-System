@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Card, List, Button, Dropdown, Space, Pagination } from 'antd';
 import { DownOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { updateCartItem } from "../../features/cart/cartSlice";
+import { updateCartItem, removeCartItem } from "../../features/cart/cartSlice";
 import "./Products.css"
 
 export default function Products(props) {
@@ -50,12 +50,12 @@ export default function Products(props) {
 
     const handleSubtract = (productID, quantity) => async () => {
         quantity -= 1;
-        if (quantity <= 0) {
-            return;
-        }
-
         try {
-            await dispatch(updateCartItem({ token, productID, quantity })).unwrap();
+            if (quantity <= 0) {
+                await dispatch(removeCartItem({ token, productID })).unwrap();
+              } else {
+                await dispatch(updateCartItem({ token, productID, quantity })).unwrap();
+              }
         } catch (e) {
             alert(e.message);
         }
