@@ -14,7 +14,8 @@ const fetchCartAPI = async (token) => {
     return responseData;
 }
 
-const updateCartItemAPI = async (token, productID, quantity) => {
+const updateCartItemAPI = async (data) => {
+    const { token, productID, quantity } = data
     const newItem = {
         productID,
         quantity

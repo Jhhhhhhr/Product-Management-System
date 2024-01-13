@@ -1,9 +1,7 @@
-import { useState } from "react";
 import { Input, Drawer, Button, List, Spin } from "antd";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import "./Cart.css";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { updateCartItem, removeCartItem } from "../../features/cart/cartSlice";
 
 export default function Cart(props) {
@@ -117,11 +115,11 @@ export default function Cart(props) {
         <hr />
         <div className="price-bar">
           <span>Subtotal: </span>
-          <span>${subtotal}</span>
+          <span>${subtotal.toFixed(2)}</span>
         </div>
         <div className="price-bar">
-          <span>Tax: </span>
-          <span>${tax}</span>
+          <span>Tax(10%): </span>
+          <span>${tax.toFixed(2)}</span>
         </div>
         {/* <div className="price-bar">
           <span>Discount: </span>
@@ -129,7 +127,7 @@ export default function Cart(props) {
         </div> */}
         <div className="price-bar">
           <span>Estimated total: </span>
-          <span>${subtotal + tax}</span>
+          <span>${(subtotal + tax).toFixed(2)}</span>
         </div>
         <Button style={{ width: "100%" }} type="primary">
           Continue to checkout

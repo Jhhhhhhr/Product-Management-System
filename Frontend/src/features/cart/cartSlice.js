@@ -2,8 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchCartAPI, removeCartItemAPI } from '../../services/shoppingCart';
 import { updateCartItemAPI } from '../../services/shoppingCart';
 
-
-
 export const removeCartItem = createAsyncThunk(
     'cart/removeCartItem',
     async ({ token, productID }) => {
@@ -14,8 +12,8 @@ export const removeCartItem = createAsyncThunk(
 
 export const updateCartItem = createAsyncThunk(
     'cart/updateCartItem',
-    async ({ token, productID, quantity }) => {
-        const responseData = await updateCartItemAPI(token, productID, quantity);
+    async (data) => {
+        const responseData = await updateCartItemAPI(data);
         return responseData;
     }
 )

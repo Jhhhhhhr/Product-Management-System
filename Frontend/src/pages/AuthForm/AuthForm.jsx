@@ -3,12 +3,11 @@ import { Button, Form, Input } from 'antd';
 import { useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import './AuthForm.css'
-
 import { useDispatch } from 'react-redux';
-import { fetchUserInfo, logoutUser } from '../../features/user/userSlice';
+import { fetchUserInfo } from '../../features/user/userSlice';
 
 const AuthForm = (props) => {
-    const { type, handleLogin } = props;
+    const { type } = props;
     const [promptMsg, setPromptMsg] = useState('Enter your email, we will send you the recovery link');
     const navigate = useNavigate();
     const [form] = Form.useForm();
@@ -20,8 +19,6 @@ const AuthForm = (props) => {
         if (type === "signIn") {
             try {
                 await dispatch(fetchUserInfo({username, password})).unwrap();
-                //handleLogin(username, responseData.isAdmin);
-
                 navigate("/");
             } catch (error) {
                 alert(error.message);
