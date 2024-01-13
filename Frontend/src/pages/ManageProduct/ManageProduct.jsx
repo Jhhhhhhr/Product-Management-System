@@ -16,8 +16,8 @@ export default function ManageProduct() {
   const [productInfo, setProductInfo] = useState({
     name: "",
     description: "",
-    price: 0,
-    quantity: 1,
+    price: null,
+    quantity: null,
     category: "Choose Category",
     imgURL: "",
   })
@@ -41,15 +41,15 @@ export default function ManageProduct() {
   const categories = [
     {
       key: "0",
-      label: "Category1",
+      label: "Sport",
     },
     {
       key: "1",
-      label: "Category2",
+      label: "Eletronics",
     },
     {
       key: "2",
-      label: "Category3",
+      label: "Apparel",
     },
     {
       key: "3",
@@ -111,13 +111,13 @@ export default function ManageProduct() {
           </div>
           <div style={{ flex: "1" }}>
             <p className="create_product_label">Price</p>
-            <Input className="create_product_input" placeholder={productInfo.price} onChange={(e)=>{setProductInfo((pre)=>({...pre, price:e.target.value}));}}></Input>
+            <Input className="create_product_input" value={productInfo.price} onChange={(e)=>{setProductInfo((pre)=>({...pre, price:e.target.value}));}}></Input>
           </div>
         </div>
         <div className="create_product_group">
           <div style={{ flex: "1" }}>
             <p className="create_product_label">In Stock Quantity</p>
-            <Input className="create_product_input" placeholder={productInfo.quantity} onChange={(e)=>{setProductInfo((pre)=>({...pre, quantity:e.target.value}));}}></Input>
+            <Input className="create_product_input" value={productInfo.quantity} onChange={(e)=>{setProductInfo((pre)=>({...pre, quantity:e.target.value}));}}></Input>
           </div>
           <div style={{ flex: "3" }}>
             <p className="create_product_label">Add Image Link</p>
