@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Input, Drawer, Button, List, Spin } from "antd";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
@@ -20,7 +20,9 @@ export default function Cart(props) {
   );
   const tax = subtotal * 0.1;
   const overall = subtotal + tax - discount;
-  setTotal(overall);
+  useEffect(() => {
+    setTotal(overall);
+  }, [overall]);
 
   const handlePlus = (productID, quantity) => async () => {
     quantity += 1;
