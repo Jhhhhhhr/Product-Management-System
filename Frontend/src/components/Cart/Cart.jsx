@@ -1,15 +1,19 @@
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Input, Drawer, Button, List, Spin } from "antd";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import "./Cart.css";
-import { useSelector, useDispatch } from "react-redux";
 import { updateCartItem, removeCartItem } from "../../features/cart/cartSlice";
 
 export default function Cart(props) {
   const { open, setOpen } = props;
+  const [coupon, setCoupon] = useState("");
+  const [discount, setDiscount] = useState(0);
   const items = useSelector((state) => state.cart.cart.items);
   const loading = useSelector((state) => state.cart.loading);
   const token = useSelector((state) => state.user.info.token);
   const dispatch = useDispatch();
+
   const subtotal = items.reduce(
     (acc, curr) => acc + curr.quantity * curr.productID.price,
     0
@@ -39,13 +43,26 @@ export default function Cart(props) {
     }
   };
 
-  const handleRemove = (productID) => async () => {    
+  const handleRemove = (productID) => async () => {
     try {
       await dispatch(removeCartItem({ token, productID })).unwrap();
+      if (items.length === 1) {
+        setDiscount(0);
+      }
     } catch (e) {
       alert(e.message);
     }
   };
+
+  const handleApplyCoupon = () => {
+    if (coupon === 'OFF20') {
+      setDiscount(20);
+      setCoupon("");
+    } else {
+      setDiscount(0);
+      alert('Coupon is not valid!');
+    }
+  }
 
   return (
     <div>
@@ -107,10 +124,10 @@ export default function Cart(props) {
             </List.Item>
           )}
         />
-        <div className="discount-code-text">Apply Discount Code</div>
+        <div className="discount-code-text">Apply Promotion Code</div>
         <div className="discount-code-bar">
-          <Input placeholder="Input you discount code here" />
-          <Button type="primary">Apply</Button>
+          <Input placeholder="Try OFF20" value={coupon} onChange={e => setCoupon(e.target.value)} />
+          <Button type="primary" onClick={handleApplyCoupon}>Apply</Button>
         </div>
         <hr />
         <div className="price-bar">
@@ -121,13 +138,15 @@ export default function Cart(props) {
           <span>Tax(10%): </span>
           <span>${tax.toFixed(2)}</span>
         </div>
-        {/* <div className="price-bar">
-          <span>Discount: </span>
-          <span>-$20</span>
-        </div> */}
+        {discount > 0 &&
+          <div className="price-bar">
+            <span>Discount: </span>
+            <span>-${discount}</span>
+          </div>
+        }
         <div className="price-bar">
           <span>Estimated total: </span>
-          <span>${(subtotal + tax).toFixed(2)}</span>
+          <span>${(subtotal + tax - discount).toFixed(2)}</span>
         </div>
         <Button style={{ width: "100%" }} type="primary">
           Continue to checkout
