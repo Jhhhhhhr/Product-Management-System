@@ -6,7 +6,7 @@ import "./Cart.css";
 import { updateCartItem, removeCartItem } from "../../features/cart/cartSlice";
 
 export default function Cart(props) {
-  const { open, setOpen } = props;
+  const { open, setOpen, setTotal } = props;
   const [coupon, setCoupon] = useState("");
   const [discount, setDiscount] = useState(0);
   const items = useSelector((state) => state.cart.cart.items);
@@ -18,8 +18,9 @@ export default function Cart(props) {
     (acc, curr) => acc + curr.quantity * curr.productID.price,
     0
   );
-
   const tax = subtotal * 0.1;
+  const overall = subtotal + tax - discount;
+  setTotal(overall);
 
   const handlePlus = (productID, quantity) => async () => {
     quantity += 1;
@@ -140,13 +141,16 @@ export default function Cart(props) {
         </div>
         {discount > 0 &&
           <div className="price-bar">
-            <span>Discount: </span>
-            <span>-${discount}</span>
+            <span>Discount:</span>
+            <div>
+              <u onClick={() => setDiscount(0)}>remove</u>
+              <span>-${discount}</span>
+            </div>
           </div>
         }
         <div className="price-bar">
           <span>Estimated total: </span>
-          <span>${(subtotal + tax - discount).toFixed(2)}</span>
+          <span>${overall.toFixed(2)}</span>
         </div>
         <Button style={{ width: "100%" }} type="primary">
           Continue to checkout
