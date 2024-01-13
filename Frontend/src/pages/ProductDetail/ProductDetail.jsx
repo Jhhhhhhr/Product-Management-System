@@ -1,9 +1,9 @@
 import styles from "./ProductDetail.module.css";
-import { Tag, Button, Space } from "antd";
+import { Tag, Button } from "antd";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { updateCartItem } from "../../features/cart/cartSlice";
+import { updateCartItem, removeCartItem } from "../../features/cart/cartSlice";
 import { fetchOneProductInfo } from "../../services/product";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 
@@ -15,7 +15,7 @@ export default function ProductDetail() {
   const [detail, setDetail] = useState({});
   const { username, isAdmin, token } = useSelector((state) => state.user.info);
   const cartItems = useSelector((state) => state.cart.cart.items);
-  const [quantityInCart, setQuantityInCart] = useState();
+  const [quantityInCart, setQuantityInCart] = useState(0);
 
   useEffect(() => {
     fetchOneProductInfo(id)
@@ -44,6 +44,12 @@ export default function ProductDetail() {
     }
 
     setQuantityInCart(curQuantity);
+
+    if(curQuantity===0){
+      dispatch(removeCartItem({ token, productID: id }));
+      return;
+    }
+
     try {
       await dispatch(updateCartItem({ token, productID: id, quantity: curQuantity })).unwrap();
     } catch (e) {
