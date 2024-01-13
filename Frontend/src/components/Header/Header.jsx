@@ -12,14 +12,9 @@ const { Search } = Input;
 export default function Header(props) {
   const { username } = props;
   const [open, setOpen] = useState(false);
+  const [total, setTotal] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const items = useSelector((state) => state.cart.cart.items);
-
-  const total = (1.1 * items.reduce(
-    (acc, curr) => acc + curr.quantity * curr.productID.price,
-    0
-  )).toFixed(2);
 
   const handleLogout = () => {
     dispatch(logoutUser());
@@ -51,7 +46,7 @@ export default function Header(props) {
           <ShoppingCartOutlined className="header-icon" style={{ color: 'white' }} />
           <p style={{ color: 'white' }}>${total}</p>
         </div>
-        <Cart open={open} setOpen={setOpen} />
+        <Cart open={open} setOpen={setOpen} setTotal={setTotal}/>
       </div>
     </div>
   );

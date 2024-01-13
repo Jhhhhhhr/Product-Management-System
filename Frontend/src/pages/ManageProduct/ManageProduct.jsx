@@ -1,6 +1,6 @@
 import "./ManageProduct.css";
 import { Input, Dropdown, Button, Space, Empty } from "antd";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
 import blankImage from "../../assets/bi_file-earmark-image.png";
 import { useEffect, useState } from "react";
@@ -11,6 +11,7 @@ const { TextArea } = Input;
 export default function ManageProduct() {
   const { productId } = useParams();
   const { token } = useSelector((state) => state.user.info);
+  const navigate = useNavigate();
 
   const [productInfo, setProductInfo] = useState({
     name: "",
@@ -63,6 +64,7 @@ export default function ManageProduct() {
     else{
       createProduct(token, productInfo);
     }
+    navigate("/");
   };
 
   const handleChooseCategory = ({key}) => {
