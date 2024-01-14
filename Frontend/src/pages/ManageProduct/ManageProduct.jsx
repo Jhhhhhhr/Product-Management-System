@@ -11,6 +11,7 @@ import {
   fetchOneProductInfo,
 } from "../../services/product";
 const { TextArea } = Input;
+import { jwtDecode } from "jwt-decode";
 
 export default function ManageProduct() {
   const { productId } = useParams();
@@ -67,11 +68,11 @@ export default function ManageProduct() {
 
   const handleSubmit = () => {
     if (productId) {
-      updateProduct(token, productId, productInfo);
+      updateProduct(token, productId, {...productInfo, updatedAt: Date.now()});
     } else {
-      createProduct(token, productInfo);
+      createProduct(token, {...productInfo, owner: jwtDecode(token).user.id});
     }
-    navigate("/");
+    navigate("/", {replace: true});
   };
 
   const handleChooseCategory = ({ key }) => {
