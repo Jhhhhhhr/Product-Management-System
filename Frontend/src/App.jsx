@@ -10,6 +10,7 @@ import ManageProduct from "./pages/ManageProduct/ManageProduct";
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCart } from "./features/cart/cartSlice";
+import AuthLayout from "./components/AuthLayout";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,18 +49,20 @@ function App() {
             path="/product/:id"
             element={<ProductDetail></ProductDetail>}
           ></Route>
-          <Route
-            path="/create-product"
-            element={<ManageProduct></ManageProduct>}
-          ></Route>
-          <Route
-            path="/edit-product/:productId"
-            element={<ManageProduct></ManageProduct>}
-          ></Route>
+          <Route element={<AuthLayout></AuthLayout>}>
+            <Route
+              path="/create-product"
+              element={<ManageProduct></ManageProduct>}
+            ></Route>
+            <Route
+              path="/edit-product/:productId"
+              element={<ManageProduct></ManageProduct>}
+            ></Route>
+          </Route>
           <Route path="*" element={<ErrorPage />} />
         </Routes>
+        <Footer />
       </Router>
-      <Footer />
     </>
   );
 }
