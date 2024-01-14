@@ -42,3 +42,12 @@ export const fetchOneProductInfo = async (productId) => {
     }
     return responseData;
 }
+
+export const fetchAllProducts = async () =>{
+    const response = await fetch("http://localhost:3000/api/products");
+    const responseData = await response.json();
+    if (!response.ok) {
+        throw new Error(responseData.message || `HTTP error! status: ${response.status}`);
+    }
+    return responseData;
+}

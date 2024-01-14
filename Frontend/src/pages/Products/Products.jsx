@@ -4,16 +4,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { Card, List, Button, Dropdown, Space, Pagination } from 'antd';
 import { DownOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { updateCartItem, removeCartItem } from "../../features/cart/cartSlice";
+import { jwtDecode } from "jwt-decode";
+import { fetchAllProducts } from "../../services/product";
 import "./Products.css"
 
-export default function Products(props) {
-    const { isAdmin, username } = props;
+export default function Products() {
     const [products, setProducts] = useState([]);
     const [menuTitle, setMenuTitle] = useState('Last added');
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const navigate = useNavigate();
-    const { token } = useSelector((state) => state.user.info);
+    const { username, isAdmin, token } = useSelector((state) => state.user.info);
     const cartItems = useSelector((state) => state.cart.cart.items);
     const dispatch = useDispatch();
 
@@ -106,8 +107,7 @@ export default function Products(props) {
     };
 
     useEffect(() => {
-        fetch("http://localhost:3000/api/products")
-            .then((response) => response.json())
+        fetchAllProducts()
             .then((data) => {
                 console.log(data);
                 setProducts([...data].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
@@ -145,6 +145,7 @@ export default function Products(props) {
                 renderItem={(product) => {
                     const cartItem = cartItems.find(item => item.productID._id === product._id);
                     const quantityInCart = cartItem ? cartItem.quantity : 0;
+                    const isOwner = token?jwtDecode(token).user.id === product.owner: false;
                     return (
                         <List.Item className='product_card'>
                             <Card className='product_card'>
@@ -168,7 +169,7 @@ export default function Products(props) {
                                                 {username && <Button type="primary" className="card-button" onClick={() => handleAddToCart(product._id)}>Add</Button>}
                                             </>
                                         )}
-                                        {isAdmin && <Button className="card-button" onClick={() => navigate(`/edit-product/${product._id}`)}>Edit</Button>}
+                                        {isAdmin && isOwner && <Button className="card-button" onClick={() => navigate(`/edit-product/${product._id}`)}>Edit</Button>}
                                     </div>
                                 </div>
                             </Card>

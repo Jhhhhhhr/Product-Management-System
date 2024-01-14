@@ -14,7 +14,7 @@ import AuthLayout from "./components/AuthLayout";
 
 function App() {
   const dispatch = useDispatch();
-  const {username, isAdmin, token} = useSelector(state=>state.user.info);  
+  const { token } = useSelector(state=>state.user.info);  
 
   useEffect(()=> {
     if(token) {
@@ -26,9 +26,9 @@ function App() {
   return (
     <>
       <Router>
-        <Header username={username} />
+        <Header/>
         <Routes>
-          <Route path="/" element={<Products isAdmin={isAdmin} username={username} />} />
+          <Route path="/" element={<Products/>} />
           <Route
             path="/signin"
             element={<AuthForm type="signIn" />}
