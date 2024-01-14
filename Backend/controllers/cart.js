@@ -4,6 +4,11 @@ const upertItem = async (req, res) => {
     try {
         const userID = req.user.id;
         const { productID, quantity } = req.body;
+        if (!(typeof productID === "string")) {
+            console.log(`ProductID: ${productID}`);
+            res.status(400).json({ message: "productID should be a string" });
+            return;
+        }
         let cart = await Cart.findOne({ userID });
         if (cart) {
             const idx = cart.items.findIndex((item) => item.productID.toString() === productID);
