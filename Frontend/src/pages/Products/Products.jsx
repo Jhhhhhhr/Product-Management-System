@@ -28,7 +28,7 @@ export default function Products() {
             setPageSize(9); 
         } else if (screenWidth < 1200) {
             setPageSize(8); 
-        } else if (screenWidth < 1450) {
+        } else if (screenWidth < 1500) {
             setPageSize(10); 
         } else {
             setPageSize(14); 
@@ -145,7 +145,7 @@ export default function Products() {
                 renderItem={(product) => {
                     const cartItem = cartItems.find(item => item.productID._id === product._id);
                     const quantityInCart = cartItem ? cartItem.quantity : 0;
-                    const isOwner = token?jwtDecode(token).user.id === product.owner: false;
+                    const isOwner = token ? jwtDecode(token).user.id === product.owner : false;
                     return (
                         <List.Item className='product_card'>
                             <Card className='product_card'>
