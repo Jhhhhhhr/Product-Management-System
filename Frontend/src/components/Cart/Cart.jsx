@@ -22,6 +22,7 @@ export default function Cart(props) {
   const overall = subtotal + tax - discount;
   useEffect(() => {
     setTotal(overall);
+    if (subtotal === 0) setDiscount(0);
   }, [overall]);
 
   const handlePlus = (productID, quantity) => async () => {
@@ -35,12 +36,13 @@ export default function Cart(props) {
 
   const handleSubtract = (productID, quantity) => async () => {
     quantity -= 1;
-    if (quantity <= 0) {
-      return;
-    }
-
     try {
-      await dispatch(updateCartItem({ token, productID, quantity })).unwrap();
+      if (quantity <= 0) {
+        await dispatch(removeCartItem({ token, productID })).unwrap();
+        setDiscount(0);
+      } else {
+        await dispatch(updateCartItem({ token, productID, quantity })).unwrap();
+      }
     } catch (e) {
       alert(e.message);
     }
