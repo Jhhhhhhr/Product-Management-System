@@ -9,8 +9,8 @@ import "./Header.css";
 
 const { Search } = Input;
 
-export default function Header(props) {
-  const { username } = props;
+export default function Header() {
+  const { username } = useSelector((state) => state.user.info);
   const [open, setOpen] = useState(false);
   const [total, setTotal] = useState(0);
   const cartItems = useSelector((state) => state.cart.cart.items);
