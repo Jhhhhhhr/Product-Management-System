@@ -1,37 +1,37 @@
-.form-container{
+.form-container {
   display: flex;
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
 }
 
 .login-form {
-    padding: 2vw;
-    height: 100%;
-    width: 30vw;
-    min-width: 350px;
-    box-shadow: 0 0 1vw gray;
-    border-radius: 5px;
-  }
-  .login-form > * {
-    margin-bottom: 1.5vw;
-  }
-  .login-form-forgot {
-    float: right;
-  }
-  .ant-col-rtl .login-form-forgot {
-    float: left;
-  }
-  .login-form-button {
-    width: 100%;
-  }
-  .Sign-in-title {
-    margin-top: 0;
-    text-align: center;
-  }
-  .close-outlined {
-    text-align: end;
-    margin: 0;
-  }
-  a {
-    text-decoration: underline;
-  }
+  padding: 2vw;
+  width: 30vw;
+  min-width: 350px;
+  box-shadow: 0 0 1vw gray;
+  border-radius: 5px;
+}
+.login-form > * {
+  margin-bottom: 1hw;
+}
+.login-form-forgot {
+  float: right;
+}
+.ant-col-rtl .login-form-forgot {
+  float: left;
+}
+.login-form-button {
+  width: 100%;
+}
+.Sign-in-title {
+  margin-top: 0;
+  text-align: center;
+}
+.close-outlined {
+  text-align: end;
+  margin: 0;
+}
+a {
+  text-decoration: underline;
+}

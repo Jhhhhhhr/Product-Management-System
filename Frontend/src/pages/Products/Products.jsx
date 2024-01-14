@@ -12,13 +12,37 @@ export default function Products() {
     const [products, setProducts] = useState([]);
     const [menuTitle, setMenuTitle] = useState('Last added');
     const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
     const navigate = useNavigate();
     const { username, isAdmin, token } = useSelector((state) => state.user.info);
     const cartItems = useSelector((state) => state.cart.cart.items);
     const dispatch = useDispatch();
 
-    const pageSize = 10;
+    const updatePageSize = () => {
+        const screenWidth = window.innerWidth;
+        if (screenWidth < 500) {
+            setPageSize(4); 
+        } else if(screenWidth < 760) {
+            setPageSize(6); 
+        } else if (screenWidth < 1000) {
+            setPageSize(9); 
+        } else if (screenWidth < 1200) {
+            setPageSize(8); 
+        } else if (screenWidth < 1450) {
+            setPageSize(10); 
+        } else {
+            setPageSize(14); 
+        }
+    };
 
+    useEffect(() => {
+        updatePageSize(); 
+        window.addEventListener("resize", updatePageSize); 
+        return () => {
+            window.removeEventListener("resize", updatePageSize);
+        };
+    }, []);
+    
     const currentProducts = products.slice(
         (currentPage - 1) * pageSize,
         currentPage * pageSize
@@ -123,7 +147,7 @@ export default function Products() {
                     const quantityInCart = cartItem ? cartItem.quantity : 0;
                     const isOwner = token?jwtDecode(token).user.id === product.owner: false;
                     return (
-                        <List.Item>
+                        <List.Item className='product_card'>
                             <Card className='product_card'>
                                 <div >
                                     <div className='product_img_container' onClick={() => navigate(`/product/${product._id}`)}>
