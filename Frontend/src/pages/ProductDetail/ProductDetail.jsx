@@ -1,26 +1,37 @@
 import styles from "./ProductDetail.module.css";
-import { Tag, Button } from "antd";
+import { Tag, Button, message  } from "antd";
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { updateCartItem, removeCartItem } from "../../features/cart/cartSlice";
 import { fetchOneProductInfo } from "../../services/product";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import { jwtDecode } from "jwt-decode";
 
 export default function ProductDetail() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const [messageApi, contextHolder] = message.useMessage();
   
   const { id } = useParams();
   const [detail, setDetail] = useState({});
   const { username, isAdmin, token } = useSelector((state) => state.user.info);
   const cartItems = useSelector((state) => state.cart.cart.items);
   const [quantityInCart, setQuantityInCart] = useState(0);
+  const [isOwner, setIsOwner] = useState(false);
 
   useEffect(() => {
+    if(location.state?.message){
+      messageApi.info(location.state?.message);
+    }
     fetchOneProductInfo(id)
       .then((data) => {
         setDetail(data);
+        const decoded = jwtDecode(token);
+        if(data.owner === decoded.user.id){
+          setIsOwner(true);
+        }
       })
       .catch((error) => console.error("Error fetching data: ", error));
   }, []);
@@ -63,6 +74,7 @@ export default function ProductDetail() {
 
   return (
     <>
+      {contextHolder}
       <div id="content">
         <h4
           style={{
@@ -141,7 +153,7 @@ export default function ProductDetail() {
                     Add To Cart
                   </Button>
                 ))}
-              {isAdmin && (
+              {isAdmin && isOwner && (
                 <Button
                   type="primary"
                   style={{
