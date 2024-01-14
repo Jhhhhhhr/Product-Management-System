@@ -90,7 +90,7 @@ const AuthForm = (props) => {
         form.resetFields();     // reset form inputs
     };
     return (
-        <div id='content' className='form-container'>
+        <div className='form-container'>
             <Form
                 form={form}
                 name="normal_login"

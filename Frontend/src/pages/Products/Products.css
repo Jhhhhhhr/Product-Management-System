@@ -4,6 +4,7 @@
 
 .products-page-header {
     padding-left: 2vw;
+    padding-right: 3vw;
     display: flex;
     justify-content: space-between;
 }
@@ -22,11 +23,11 @@
 }
 
 .products-list {
-    padding-left: 2vw;
-    padding-right: 2vw;
+    padding-left: 3vw;
+    padding-right: 3vw;
 }
 .product_card {
-    max-width: 300px;
+    max-width: 400px;
 }
 
 .product_img_container{
@@ -73,4 +74,25 @@
     background-color: #1073ff;
     color: white;
     border-color: transparent;
+}
+
+@media (max-width: 440px) {
+    .products-page-header {
+        display: flex;
+        flex-direction: column; 
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    h1 {
+        margin: 0.3em;
+    }
+    .products-list {
+        padding-left: 30px;
+        padding-right: 30px;
+
+    }
+    .product_card {
+        display: flex;
+        justify-content: center;
+    }
 }

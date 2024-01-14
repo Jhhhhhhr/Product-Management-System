@@ -17,13 +17,14 @@
 
 .discount-code-text {
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .discount-code-bar {
   display: flex;
   justify-content: space-between;
   margin-top: 0.5vw;
-  margin-bottom: 2vw;
+  margin-bottom: 12px;
 }
 
 hr {
@@ -35,7 +36,7 @@ hr {
 .price-bar {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 5px;
+  margin-bottom: 12px;
 }
 
 .cart-list-container {

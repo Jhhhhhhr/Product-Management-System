@@ -1,10 +1,17 @@
 .header {
+  width: 100%;
+  background: #111827;
+}
+
+.header-info {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #111827;
-  height: 50px;
-  width: 100%;
+}
+
+.header-searcher {
+  display: flex;
+  justify-content: center;
 }
 
 .header_title {
@@ -32,4 +39,10 @@
 
 .header-icon {
   margin-right: 0.5vw;
+}
+
+@media (max-width: 440px)  {
+  .header {
+    padding-bottom: 1vh;
+  }
 }
