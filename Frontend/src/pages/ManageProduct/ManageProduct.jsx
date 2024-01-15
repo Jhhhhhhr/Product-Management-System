@@ -87,16 +87,7 @@ export default function ManageProduct() {
 
   return (
     <div id="content">
-      <h4
-        style={{
-          marginLeft: "20%",
-          marginBottom: "1em",
-          fontFamily: "Inter",
-          fontSize: "32px",
-          fontWeight: "700",
-          letterSpacing: "0px",
-        }}
-      >
+      <h4 className="create_product_title">
         {productId ? "Edit Product" : "Create Product"}
       </h4>
       <div className="create_product_info_container">
@@ -201,13 +192,15 @@ export default function ManageProduct() {
             ></Empty>
           )}
         </div>
-        <Button
-          type="primary"
-          style={{ height: "40px", backgroundColor: "#5048E5" }}
-          onClick={handleSubmit}
-        >
-          {productId ? "Update Product" : "Add Product"}
-        </Button>
+        <div className="button_container">        
+          <Button
+            type="primary"
+            style={{ height: "40px", backgroundColor: "#5048E5" }}
+            onClick={handleSubmit}
+          >
+            {productId ? "Update Product" : "Add Product"}
+          </Button>
+        </div>
       </div>
     </div>
   );

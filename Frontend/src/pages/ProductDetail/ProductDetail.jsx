@@ -76,16 +76,7 @@ export default function ProductDetail() {
     <>
       {contextHolder}
       <div id="content">
-        <h4
-          style={{
-            marginLeft: "5%",
-            marginBottom: "1em",
-            fontFamily: "Inter",
-            fontSize: "32px",
-            fontWeight: "700",
-            letterSpacing: "0px",
-          }}
-        >
+        <h4 className={styles.title}>
           Products Detail
         </h4>
         <div className={styles.pd_card}>

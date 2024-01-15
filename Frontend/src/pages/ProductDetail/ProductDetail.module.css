@@ -1,3 +1,11 @@
+.title {
+    margin-left: 5%;
+    margin-bottom: 1em;
+    font-family: "Inter";
+    font-size: 32px;
+    font-weight: 700;
+}
+
 .pd_card {
     display: flex;
     justify-content: space-between;
@@ -89,4 +97,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+@media (max-width: 440px){
+    .title {
+        text-align: center;
+        margin-left: 0;
+    }
+
+    .pd_card{
+        flex-direction: column;
+    }
+
+    .pd_info{
+        margin: 0;
+    }
 }
