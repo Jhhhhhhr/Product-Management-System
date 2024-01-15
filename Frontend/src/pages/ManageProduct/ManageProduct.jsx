@@ -72,16 +72,16 @@ export default function ManageProduct() {
     },
   ];
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if(!productInfo.name){
       messageApi.info("Please Input Product Name!");
       return;
     }
 
     if (productId) {
-      updateProduct(token, productId, {...productInfo, updatedAt: Date.now()});
+      await updateProduct(token, productId, {...productInfo, updatedAt: Date.now()});
     } else {
-      createProduct(token, productInfo);
+      await createProduct(token, productInfo);
     }
     navigate("/");
     navigate(0);
