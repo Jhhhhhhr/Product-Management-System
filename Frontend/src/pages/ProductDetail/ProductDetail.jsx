@@ -112,8 +112,8 @@ export default function ProductDetail() {
                 </Tag>
               )}
             </div>
-            <p className={styles.pd_desc}>{detail.description}</p>
-            <div className={styles.container}>
+            <pre className={styles.pd_desc}>{detail.description}</pre>
+            <div className={styles.button_container}>
               {username && detail.quantity > 0 &&
                 (quantityInCart > 0 ? (
                   <div className={styles.cart_button_container}>
@@ -138,7 +138,7 @@ export default function ProductDetail() {
                 ) : (
                   <Button
                     type="primary"
-                    style={{ height: "40px", backgroundColor: "#5048E5" }}
+                    className={styles.add_product_button}
                     onClick={changeQuantityInCart("insert")}
                   >
                     Add To Cart
@@ -147,12 +147,7 @@ export default function ProductDetail() {
               {isAdmin && isOwner && (
                 <Button
                   type="primary"
-                  style={{
-                    height: "40px",
-                    color: "#535353",
-                    backgroundColor: "#ffffff",
-                    border: "1px solid #CCCCCC",
-                  }}
+                  className={styles.edit_button}
                   onClick={onClickEditProduct}
                 >
                   Edit
