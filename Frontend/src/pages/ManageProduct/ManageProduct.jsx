@@ -171,7 +171,7 @@ export default function ManageProduct() {
         </div>
         <div className="create_product_img_preview">
           {previewImgURL ? (
-            <img src={previewImgURL} style={{width:"100%", height:"100%"}}></img>
+            <img src={previewImgURL} className="preview-img"></img>
           ) : (
             <Empty
               image={blankImage}

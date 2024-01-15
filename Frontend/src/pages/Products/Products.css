@@ -15,6 +15,7 @@
 
 .product-card-buttons {
     display: flex;
+    gap: 5px;
 }
 
 .products-page-header-buttons > * {
