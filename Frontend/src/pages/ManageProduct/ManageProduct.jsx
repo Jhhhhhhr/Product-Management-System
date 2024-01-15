@@ -78,6 +78,7 @@ export default function ManageProduct() {
       createProduct(token, productInfo);
     }
     navigate("/");
+    navigate(0);
   };
 
   const handleChooseCategory = ({ key }) => {
