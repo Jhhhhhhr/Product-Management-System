@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Card, List, Button, Dropdown, Space, Pagination } from 'antd';
+import { Card, List, Button, Dropdown, Space, Pagination, message } from 'antd';
 import { DownOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { updateCartItem, removeCartItem } from "../../features/cart/cartSlice";
 import { jwtDecode } from "jwt-decode";
@@ -17,6 +17,7 @@ export default function Products() {
     const { username, isAdmin, token } = useSelector((state) => state.user.info);
     const cartItems = useSelector((state) => state.cart.cart.items);
     const dispatch = useDispatch();
+    const [messageApi, contextHolder] = message.useMessage();
 
     const updatePageSize = () => {
         const screenWidth = window.innerWidth;
@@ -60,7 +61,11 @@ export default function Products() {
         }
     };
 
-    const handleAddToCart = (id) => {
+    const handleAddToCart = (id, stock) => {
+        if(stock===0){
+            messageApi.info("This product is out of stock!");
+            return;
+        }
         dispatch(updateCartItem({ token, productID: id, quantity: 1 }));
     }
 
@@ -117,6 +122,7 @@ export default function Products() {
 
     return (
         <div id='content' className='products-page'>
+            {contextHolder}
             <div className="products-page-header">
                 <h1>Products</h1>
                 <div className="products-page-header-buttons">
@@ -166,7 +172,7 @@ export default function Products() {
                                             </div>
                                         ) : (
                                             <>
-                                                {username && <Button type="primary" className="card-button" onClick={() => handleAddToCart(product._id)}>Add</Button>}
+                                                {username && <Button type="primary" className="card-button" onClick={() => handleAddToCart(product._id, product.quantity)}>Add</Button>}
                                             </>
                                         )}
                                         {isAdmin && isOwner && <Button className="card-button" onClick={() => navigate(`/edit-product/${product._id}`)}>Edit</Button>}
