@@ -101,7 +101,7 @@ export default function ManageProduct() {
         ></Input>
         <p className="create_product_label">Product description</p>
         <TextArea
-          style={{ fontSize: "24px" }}
+          style={{ fontSize: "1rem" }}
           rows={4}
           value={productInfo.description}
           onChange={(e) => {
@@ -116,7 +116,7 @@ export default function ManageProduct() {
               trigger={["click"]}
             >
               <Button
-                style={{ width: "100%", height: "56px", fontSize: "24px" }}
+                style={{ width: "100%", height: "2rem", fontSize: "1rem" }}
               >
                 {productInfo.category}
                 <DownOutlined />
@@ -161,7 +161,7 @@ export default function ManageProduct() {
               ></Input>
               <Button
                 type="primary"
-                style={{ height: "56px", backgroundColor: "#5048E5" }}
+                style={{ height: "2rem", backgroundColor: "#5048E5" }}
                 onClick={()=>{setPreviewImgURL(productInfo.imgURL);}}
               >
                 Upload
