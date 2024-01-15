@@ -1,5 +1,5 @@
 import "./ManageProduct.css";
-import { Input, Dropdown, Button, Space, Empty } from "antd";
+import { Input, Dropdown, Button, Space, Empty, message } from "antd";
 import { useParams, useNavigate } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
 import blankImage from "../../assets/bi_file-earmark-image.png";
@@ -16,13 +16,14 @@ export default function ManageProduct() {
   const { productId } = useParams();
   const { token } = useSelector((state) => state.user.info);
   const navigate = useNavigate();
+  const [messageApi, contextHolder] = message.useMessage();
 
   const [productInfo, setProductInfo] = useState({
     name: "",
     description: "",
     price: null,
     quantity: null,
-    category: "Choose Category",
+    category: "",
     imgURL: null,
     updatedAt: null,
     owner: null,
@@ -72,6 +73,11 @@ export default function ManageProduct() {
   ];
 
   const handleSubmit = () => {
+    if(!productInfo.name){
+      messageApi.info("Please Input Product Name!");
+      return;
+    }
+
     if (productId) {
       updateProduct(token, productId, {...productInfo, updatedAt: Date.now()});
     } else {
@@ -88,6 +94,7 @@ export default function ManageProduct() {
 
   return (
     <div id="content">
+      {contextHolder}
       <h4 className="create_product_title">
         {productId ? "Edit Product" : "Create Product"}
       </h4>
@@ -119,7 +126,7 @@ export default function ManageProduct() {
               <Button
                 style={{ width: "100%", height: "2rem", fontSize: "1rem" }}
               >
-                {productInfo.category}
+                {productInfo.category? productInfo.category: "Choose Category"}
                 <DownOutlined />
               </Button>
             </Dropdown>
