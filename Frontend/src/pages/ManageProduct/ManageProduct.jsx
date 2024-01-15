@@ -11,7 +11,6 @@ import {
   fetchOneProductInfo,
 } from "../../services/product";
 const { TextArea } = Input;
-import { jwtDecode } from "jwt-decode";
 
 export default function ManageProduct() {
   const { productId } = useParams();
@@ -25,6 +24,9 @@ export default function ManageProduct() {
     quantity: null,
     category: "Choose Category",
     imgURL: null,
+    updatedAt: null,
+    owner: null,
+    createdAt: null
   });
 
   const [previewImgURL, setPreviewImgURL] = useState();
@@ -40,6 +42,9 @@ export default function ManageProduct() {
             quantity: data.quantity,
             category: data.category,
             imgURL: data.imgURL,
+            updatedAt: data.updatedAt,
+            owner: data.owner,
+            createdAt: data.createdAt
           });
           setPreviewImgURL(data.imgURL);
         })
@@ -70,9 +75,9 @@ export default function ManageProduct() {
     if (productId) {
       updateProduct(token, productId, {...productInfo, updatedAt: Date.now()});
     } else {
-      createProduct(token, {...productInfo, owner: jwtDecode(token).user.id});
+      createProduct(token, productInfo);
     }
-    navigate("/", {replace: true});
+    navigate("/");
   };
 
   const handleChooseCategory = ({ key }) => {

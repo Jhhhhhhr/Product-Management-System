@@ -123,7 +123,7 @@ export default function ProductDetail() {
             </div>
             <p className={styles.pd_desc}>{detail.description}</p>
             <div className={styles.container}>
-              {username &&
+              {username && detail.quantity > 0 &&
                 (quantityInCart > 0 ? (
                   <div className={styles.cart_button_container}>
                     <Button
