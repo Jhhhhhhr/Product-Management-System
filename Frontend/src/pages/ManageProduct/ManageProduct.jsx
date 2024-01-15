@@ -81,7 +81,7 @@ export default function ManageProduct() {
     if (productId) {
       await updateProduct(token, productId, {...productInfo, updatedAt: Date.now()});
     } else {
-      await createProduct(token, productInfo);
+      await createProduct(token, {...productInfo, createdAt: Date.now()});
     }
     navigate("/");
     navigate(0);
