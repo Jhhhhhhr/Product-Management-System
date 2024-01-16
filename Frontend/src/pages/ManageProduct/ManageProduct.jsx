@@ -78,6 +78,16 @@ export default function ManageProduct() {
       return;
     }
 
+    if(!productInfo.price || productInfo.price<0){
+      messageApi.info("Please Input Price (shoule more than 0)!");
+      return;
+    }
+
+    if(!productInfo.quantity || productInfo.quantity<0){
+      messageApi.info("Please Input Right Quantity In Stock!");
+      return;
+    }
+
     if (productId) {
       await updateProduct(token, productId, {...productInfo, updatedAt: Date.now()});
     } else {
